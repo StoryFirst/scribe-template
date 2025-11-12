@@ -13,3 +13,7 @@ Scribe outputs the following data:
 **_scenes/** - Each scene gets their own markdownfile with the format `{id}.md`, it will use the layout 'scene'
 **world.md** - The world markdown file. 
 **_config.yaml** Jekyll config for that specfic site. 
+
+## Github Action Template
+
+You should be able to use the template file `github-action-template.yml` to automate a deploy to AWS S3, for the purpose of updating the website. 

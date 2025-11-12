@@ -1,0 +1,60 @@
+name: Build
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    container: bcentinaro/jekyll-build:latest
+    name: Build
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+      AWS_REGION: us-east-1
+      JEKYLL_ENV: production
+
+
+    steps:
+      - name: Checkout Scribe Data
+        uses: actions/checkout@v5
+        with:
+          path: data
+      - name: Checkout Template
+        uses: actions/checkout@v5
+        with:
+          repository: https://github.com/bcentinaro/scribe-template
+          path: template
+      - name: Copy Data to Template
+        run: |
+          cp -r ./data/* ./template
+
+      - name: Update Ruby Gems
+        run:  gem update --system
+      - uses: actions/cache@v4
+        with:
+          path: ./template/vendor
+          key: ${{ runner.os }}-ruby-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-ruby-gems-
+      - uses: actions/cache@v4
+        with:
+          path: template/node_modules
+          key: ${{ runner.os }}-packages-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-
+      - name: Install Packages
+        run: |
+            npm install
+            bundle config path vendor/bundle
+            bundle install --jobs 4 --retry 3
+        working-directory: template
+
+      - name: Build Static
+        run: |
+          bundle exec jekyll build
+        working-directory: template
+      - name: Deploy 
+        run: aws s3 sync  --cache-control "max-age=86400"  --exclude "*.svg" . s3://${{secrets.S3_BUCKET}}
+        working-directory: site/_site
