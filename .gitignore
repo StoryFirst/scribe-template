@@ -1,0 +1,17 @@
+_site
+*/.DS_Store
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+node_modules
+vendor
+.bundle/
+tina
+.env
+.vscode
+_chapters/
+_characters/
+_locations/
+_books/
+_scenes/
+_config.yml

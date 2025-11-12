@@ -1,0 +1,24 @@
+<svg width="100%" height="100%" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <rect width="1280" height="720" fill="#e6eaf0" />
+
+  <!-- Sky gradient -->
+  <defs>
+    <linearGradient id="skyGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d0e0f5" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#skyGradient)" />
+
+  <!-- Sun -->
+  <circle cx="200" cy="150" r="60" fill="#ffdd99" opacity="0.6" />
+
+  <!-- Mountains - back -->
+  <polygon points="0,500 300,300 600,520 1280,400 1280,720 0,720" fill="#b0c4d8" />
+
+  <!-- Mountains - front -->
+  <polygon points="0,600 400,380 800,600 1280,450 1280,720 0,720" fill="#8ca5bb" />
+
+  <!-- Ground -->
+  <rect y="650" width="1280" height="70" fill="#a2b9a5" />
+</svg>

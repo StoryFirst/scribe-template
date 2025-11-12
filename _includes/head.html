@@ -1,0 +1,86 @@
+<head>
+  {%- if site.analytics_id -%}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{site.analytics_id}}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{site.analytics_id}}');
+  </script>
+  {%- endif -%}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>{{ page.title }} - {{ site.title }}</title>
+
+  {%- comment -%} Build description based on page type {%- endcomment -%}
+  {%- if page.layout == "character" and page.caption -%}
+    {%- assign page_description = page.caption | append: " - " | append: page.description | strip_html | truncate: 200 -%}
+  {%- elsif page.layout == "location" and page.caption -%}
+    {%- assign page_description = page.caption | append: " - " | append: page.description | strip_html | truncate: 200 -%}
+  {%- else -%}
+    {%- assign page_description = page.description | default: page.excerpt | default: site.description | strip_html | truncate: 200 -%}
+  {%- endif -%}
+
+  {%- comment -%} Determine best image for social sharing {%- endcomment -%}
+  {%- if page.image_url -%}
+    {%- assign social_image = page.image_url -%}
+  {%- elsif page.item_image -%}
+    {%- assign social_image = site.url | append: page.item_image -%}
+  {%- elsif site.logo -%}
+    {%- assign social_image = site.url | append: site.logo -%}
+  {%- else -%}
+    {%- assign social_image = site.url | append: '/assets/image/logo.png' -%}
+  {%- endif -%}
+
+  {%- comment -%} Canonical URL {%- endcomment -%}
+  {%- assign canonical_url = site.url | append: page.url -%}
+
+  <meta name="description" content="{{ page_description }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- comment -%} Open Graph / Facebook {%- endcomment -%}
+  <meta property="og:type" content="{% if page.layout == 'character' %}profile{% elsif page.layout == 'chapter' %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ page.name | default: page.title }} - {{ site.title }}">
+  <meta property="og:description" content="{{ page_description }}">
+  <meta property="og:image" content="{{ social_image }}">
+  <meta property="og:image:alt" content="{{ page.name | default: page.title }}">
+
+  {%- if page.layout == "character" -%}
+    {%- comment -%} Profile-specific Open Graph tags {%- endcomment -%}
+    <meta property="profile:first_name" content="{{ page.name | split: ' ' | first }}">
+    {%- if page.name contains ' ' -%}
+      <meta property="profile:last_name" content="{{ page.name | split: ' ' | last }}">
+    {%- endif -%}
+  {%- elsif page.layout == "chapter" -%}
+    {%- comment -%} Article-specific Open Graph tags {%- endcomment -%}
+    <meta property="article:published_time" content="{{ page.inserted_at | default: page.date }}">
+    <meta property="article:modified_time" content="{{ page.updated_at }}">
+    {%- if site.title -%}
+      <meta property="article:author" content="{{ site.title }}">
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%} Twitter Card {%- endcomment -%}
+  <meta name="twitter:card" content="summary_large_image">
+  {%- if site.twitter -%}
+    <meta name="twitter:site" content="{{ site.twitter }}">
+  {%- endif -%}
+  <meta name="twitter:title" content="{{ page.name | default: page.title }} - {{ site.title }}">
+  <meta name="twitter:description" content="{{ page_description }}">
+  <meta name="twitter:image" content="{{ social_image }}">
+  <meta name="twitter:image:alt" content="{{ page.name | default: page.title }}">
+
+  {%- comment -%} iOS Smart App Banner (if you have an iOS app) {%- endcomment -%}
+  {%- if site.ios_app_id -%}
+    <meta name="apple-itunes-app" content="app-id={{ site.ios_app_id }}, app-argument={{ canonical_url }}">
+  {%- endif -%}
+
+  {%- comment -%} Discord embed color based on theme {%- endcomment -%}
+  <meta name="theme-color" content="#0a0a0a">
+
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+</head>

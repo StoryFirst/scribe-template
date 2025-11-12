@@ -1,0 +1,76 @@
+---
+title: Characters
+layout: page
+permalink: /characters.html
+---
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h1 class="text-4xl font-bold text-gray-900 mb-8">Characters</h1>
+
+  <!-- Character Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% assign sorted_characters = site.characters | sort: 'name' %}
+    {% for character in sorted_characters %}
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+      <a href="{{ character.url | relative_url }}" class="block">
+        <!-- Character Image -->
+        {% if character.image_url %}
+        <div class="aspect-square bg-gray-200">
+          <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-full h-full object-cover">
+        </div>
+        {% else %}
+        <div class="aspect-square bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center">
+          <span class="text-6xl font-bold text-white opacity-50">{{ character.name | slice: 0 }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Character Info -->
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+              Character
+            </span>
+            {% if character.personality_type %}
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700">
+              {{ character.personality_type }}
+            </span>
+            {% endif %}
+          </div>
+
+          <h2 class="text-2xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+            {{ character.name }}
+          </h2>
+
+          {% if character.caption %}
+          <p class="text-sm text-gray-600 italic mb-3">{{ character.caption }}</p>
+          {% endif %}
+
+          {% if character.description %}
+          <p class="text-gray-700 line-clamp-3">{{ character.description }}</p>
+          {% endif %}
+
+          <!-- Additional Info -->
+          <div class="mt-4 flex flex-wrap gap-2">
+            {% if character.apperance_identity %}
+            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
+              {{ character.apperance_identity | capitalize }}
+            </span>
+            {% endif %}
+
+            {% if character.personality_motivation %}
+            <span class="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded">
+              {{ character.personality_motivation | replace: "_", " " | capitalize }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Character Count -->
+  <div class="mt-8 text-center text-gray-600">
+    <p>Showing {{ site.characters | size }} character{% if site.characters.size != 1 %}s{% endif %}</p>
+  </div>
+</div>

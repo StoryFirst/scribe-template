@@ -1,0 +1,147 @@
+---
+layout: default
+---
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Header Section -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+    {% if page.image_url %}
+    <div class="h-96 w-full overflow-hidden bg-gray-200">
+      <img class="w-full h-full object-cover" src="{{ page.image_url }}" alt="{{ page.name }}">
+    </div>
+    {% endif %}
+
+    <div class="p-8">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+          Location
+        </span>
+      </div>
+
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ page.name }}</h1>
+
+      {% if page.caption %}
+      <p class="text-xl text-gray-600 mb-4">{{ page.caption }}</p>
+      {% endif %}
+
+      {% if page.description %}
+      <p class="text-gray-700 text-lg">{{ page.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Main Content Column -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Location Content/Description -->
+      {% if content != "" and content != nil %}
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">About</h2>
+        <div class="prose max-w-none text-gray-700">
+          {{ content }}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Child Locations -->
+      {% if page.children.size > 0 %}
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Locations Within {{ page.name }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {% for child in page.children %}
+          <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+            {% assign child_location = site.locations | where: "id", child.id | first %}
+            {% if child_location %}
+              <a href="{{ child_location.url | relative_url }}" class="block group">
+                {% if child.image_url %}
+                <div class="aspect-video w-full overflow-hidden bg-gray-200">
+                  <img src="{{ child.image_url }}" alt="{{ child.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                </div>
+                {% endif %}
+                <div class="p-4">
+                  <h3 class="font-semibold text-gray-900 group-hover:text-blue-600">{{ child.name }}</h3>
+                  {% if child_location.caption %}
+                  <p class="text-sm text-gray-600 mt-1">{{ child_location.caption }}</p>
+                  {% endif %}
+                </div>
+              </a>
+            {% else %}
+              {% if child.image_url %}
+              <div class="aspect-video w-full overflow-hidden bg-gray-200">
+                <img src="{{ child.image_url }}" alt="{{ child.name }}" class="w-full h-full object-cover">
+              </div>
+              {% endif %}
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-900">{{ child.name }}</h3>
+              </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Sidebar Column -->
+    <div class="space-y-6">
+      <!-- Parent Location -->
+      {% if page.parent.id %}
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Parent Location</h2>
+        {% assign parent_location = site.locations | where: "id", page.parent.id | first %}
+        {% if parent_location %}
+        <a href="{{ parent_location.url | relative_url }}" class="block group">
+          {% if page.parent.image_url %}
+          <div class="aspect-video w-full overflow-hidden bg-gray-200 rounded-lg mb-3">
+            <img src="{{ page.parent.image_url }}" alt="{{ page.parent.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          </div>
+          {% endif %}
+          <h3 class="font-semibold text-lg text-gray-900 group-hover:text-blue-600">{{ page.parent.name }}</h3>
+          {% if parent_location.caption %}
+          <p class="text-sm text-gray-600 mt-1">{{ parent_location.caption }}</p>
+          {% endif %}
+        </a>
+        {% else %}
+        <div>
+          {% if page.parent.image_url %}
+          <div class="aspect-video w-full overflow-hidden bg-gray-200 rounded-lg mb-3">
+            <img src="{{ page.parent.image_url }}" alt="{{ page.parent.name }}" class="w-full h-full object-cover">
+          </div>
+          {% endif %}
+          <h3 class="font-semibold text-lg text-gray-900">{{ page.parent.name }}</h3>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Meta Information -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Details</h2>
+        <dl class="space-y-3 text-sm">
+          {% if page.inserted_at %}
+          <div>
+            <dt class="text-gray-500">Created</dt>
+            <dd class="text-gray-900">{{ page.inserted_at | date: "%B %d, %Y" }}</dd>
+          </div>
+          {% endif %}
+
+          {% if page.updated_at %}
+          <div>
+            <dt class="text-gray-500">Last Updated</dt>
+            <dd class="text-gray-900">{{ page.updated_at | date: "%B %d, %Y" }}</dd>
+          </div>
+          {% endif %}
+
+          {% if page.children.size > 0 %}
+          <div>
+            <dt class="text-gray-500">Sub-locations</dt>
+            <dd class="text-gray-900">{{ page.children.size }}</dd>
+          </div>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+

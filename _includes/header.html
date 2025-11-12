@@ -1,0 +1,79 @@
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Site Title/Logo -->
+      <div class="flex-shrink-0">
+        <a href="{{ '/' | relative_url }}" class="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
+          {{ site.title }}
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:space-x-8">
+        <a href="{{ '/' | relative_url }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors {% if page.url == '/' or page.url == '/index.html' %}border-b-2 border-gray-900{% endif %}">
+          Home
+        </a>
+        <a href="{{ '/about.html' | relative_url }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors {% if page.url contains '/about' %}border-b-2 border-gray-900{% endif %}">
+          About
+        </a>
+        <a href="{{ '/characters.html' | relative_url }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors {% if page.url contains '/characters' or page.layout == 'character' %}border-b-2 border-gray-900{% endif %}">
+          Characters
+        </a>
+        <a href="{{ '/locations.html' | relative_url }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors {% if page.url contains '/locations' or page.layout == 'location' %}border-b-2 border-gray-900{% endif %}">
+          Locations
+        </a>
+        <a href="{{ '/books.html' | relative_url }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-700 transition-colors {% if page.url contains '/books' or page.layout == 'book' or page.layout == 'chapter' %}border-b-2 border-gray-900{% endif %}">
+          Books
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-900 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900 transition-colors" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <!-- Hamburger icon -->
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="pt-2 pb-3 space-y-1">
+        <a href="{{ '/' | relative_url }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-700 transition-colors {% if page.url == '/' or page.url == '/index.html' %}bg-gray-50 border-l-4 border-gray-900{% endif %}">
+          Home
+        </a>
+        <a href="{{ '/about.html' | relative_url }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-700 transition-colors {% if page.url contains '/about' %}bg-gray-50 border-l-4 border-gray-900{% endif %}">
+          About
+        </a>
+        <a href="{{ '/characters.html' | relative_url }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-700 transition-colors {% if page.url contains '/characters' or page.layout == 'character' %}bg-gray-50 border-l-4 border-gray-900{% endif %}">
+          Characters
+        </a>
+        <a href="{{ '/locations.html' | relative_url }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-700 transition-colors {% if page.url contains '/locations' or page.layout == 'location' %}bg-gray-50 border-l-4 border-gray-900{% endif %}">
+          Locations
+        </a>
+        <a href="{{ '/books.html' | relative_url }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-700 transition-colors {% if page.url contains '/books' or page.layout == 'book' or page.layout == 'chapter' %}bg-gray-50 border-l-4 border-gray-900{% endif %}">
+          Books
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  });
+</script>
