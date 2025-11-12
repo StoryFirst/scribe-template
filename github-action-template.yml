@@ -24,7 +24,7 @@ jobs:
       - name: Checkout Template
         uses: actions/checkout@v5
         with:
-          repository: https://github.com/bcentinaro/scribe-template
+          repository: StoryFirst/scribe-template
           path: template
       - name: Copy Data to Template
         run: |
@@ -56,5 +56,5 @@ jobs:
           bundle exec jekyll build
         working-directory: template
       - name: Deploy 
-        run: aws s3 sync  --cache-control "max-age=86400"  --exclude "*.svg" . s3://${{secrets.S3_BUCKET}}
-        working-directory: site/_site
+        run: aws s3 sync  --cache-control "max-age=86400" . s3://${{vars.S3_BUCKET}}
+        working-directory: template/_site

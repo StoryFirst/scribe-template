@@ -16,4 +16,4 @@ Scribe outputs the following data:
 
 ## Github Action Template
 
-You should be able to use the template file `github-action-template.yml` to automate a deploy to AWS S3, for the purpose of updating the website. 
+You should be able to use the template file `github-action-template.yml` to automate a deploy to AWS S3, for the purpose of updating the website. It requires the secrets S3_AWS_ID and S3_AWS_SECRET to be setup as well as the variable S3_BUCKET.
