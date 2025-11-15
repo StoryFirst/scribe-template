@@ -20,7 +20,7 @@ layout: default
   {% if page.character_appearances and page.character_appearances.size > 0 %}
   <section class="character-appearances mb-12">
     <h2 class="text-2xl font-bold mb-6">Character Appearances</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
       {% for appearance in page.character_appearances %}
         {% assign character = site.characters | where: "scribe_id", appearance.id | first %}
         {% if character %}
@@ -28,10 +28,10 @@ layout: default
             {% if character.image_url %}
               <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-full aspect-square object-cover">
             {% endif %}
-            <div class="p-3">
-              <h3 class="text-lg font-bold mb-1">{{ character.name }}</h3>
+            <div class="p-2">
+              <h3 class="text-sm font-bold mb-0.5">{{ character.name }}</h3>
               {% if character.caption %}
-                <p class="text-xs text-gray-500 italic mb-2">{{ character.caption }}</p>
+                <p class="text-xs text-gray-500 italic">{{ character.caption }}</p>
               {% endif %}
               {% if appearance.description %}
                 <div class="appearance-description absolute inset-0 bg-white bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity overflow-y-auto">
