@@ -23,7 +23,7 @@
 
   h7 { @apply font-bold text-xl pb-5; }
 
-  ul { @apply list-square; p-5; }
+  ul { @apply list-square p-5; }
 
-  ol { @apply list-roman; p-5; }
+  ol { @apply list-roman p-5; }
 }
