@@ -20,26 +20,41 @@ layout: default
   {% if page.character_appearances and page.character_appearances.size > 0 %}
   <section class="character-appearances mb-12">
     <h2 class="text-2xl font-bold mb-6">Character Appearances</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div class="space-y-4">
       {% for appearance in page.character_appearances %}
         {% assign character = site.characters | where: "scribe_id", appearance.id | first %}
         {% if character %}
-          <div class="character-card border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex">
-            {% if character.image_url %}
-              <div class="flex-shrink-0 w-32 flex items-start justify-center">
-                <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-32 h-32 object-cover">
+          <div class="border-l-4 border-purple-500">
+            <div class="flex items-start gap-4 pl-4">
+              <!-- Character Image -->
+              {% if character.image_url %}
+              <div class="flex-shrink-0">
+                {% if character %}
+                <a href="{{ character.url | relative_url }}" class="block">
+                  <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-20 h-20 rounded-lg object-cover hover:opacity-80 transition-opacity">
+                </a>
+                {% else %}
+                <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-20 h-20 rounded-lg object-cover">
+                {% endif %}
               </div>
-            {% endif %}
-            <div class="p-2 flex-1 flex flex-col">
-              <h3 class="text-sm font-bold mb-0.5">{{ character.name }}</h3>
-              {% if character.caption %}
-                <p class="text-xs text-gray-500 italic mb-1">{{ character.caption }}</p>
               {% endif %}
-              {% if appearance.description %}
-                <div class="text-xs text-gray-700 prose prose-sm max-w-none flex-1">
-                  <div class="content">{{ appearance.description | markdownify }}</div>
-                </div>
-              {% endif %}
+
+              <!-- Character Info -->
+              <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-gray-900">
+                  {% if character %}
+                    <a href="{{ character.url | relative_url }}" class="hover:text-blue-600">{{ character.name }}</a>
+                  {% else %}
+                    {{ character.name }}
+                  {% endif %}
+                </h3>
+                {% if character.caption %}
+                <p class="text-sm text-gray-500 mb-1">{{ character.caption }}</p>
+                {% endif %}
+                {% if appearance.description %}
+                <div class="text-gray-700 mt-2 text-sm prose prose-sm max-w-none"><div class="content">{{ appearance.description | markdownify }}</div></div>
+                {% endif %}
+              </div>
             </div>
           </div>
         {% endif %}
@@ -53,9 +68,9 @@ layout: default
   {% if chapter_scenes.size > 0 %}
     {% assign location_ids = "" | split: "" %}
     {% for scene in chapter_scenes %}
-      {% if scene.location_id and scene.location_id != "" %}
-        {% unless location_ids contains scene.location_id %}
-          {% assign location_ids = location_ids | push: scene.location_id %}
+      {% if scene.location %}
+        {% unless location_ids contains scene.location.id %}
+          {% assign location_ids = location_ids | push: scene.location.id %}
         {% endunless %}
       {% endif %}
     {% endfor %}
@@ -63,21 +78,33 @@ layout: default
     {% if location_ids.size > 0 %}
     <section class="chapter-locations mb-12">
       <h2 class="text-2xl font-bold mb-6">Locations</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="space-y-4">
         {% for location_id in location_ids %}
           {% assign location = site.locations | where: "scribe_id", location_id | first %}
           {% if location %}
-            <div class="location-card border border-gray-300 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              {% if location.image_url %}
-                <img src="{{ location.image_url }}" alt="{{ location.name }}" class="w-full aspect-square object-cover">
-              {% endif %}
-              <div class="p-3">
-                <h3 class="text-lg font-bold mb-1">
-                  <a href="{{ location.url }}" class="text-gray-900 hover:text-brand-primary">{{ location.name }}</a>
-                </h3>
-                {% if location.caption %}
-                  <p class="text-sm text-gray-600">{{ location.caption }}</p>
+            <div class="border-l-4 border-green-500">
+              <div class="flex items-start gap-4 pl-4">
+                <!-- Location Image -->
+                {% if location.image_url %}
+                <div class="flex-shrink-0">
+                  <a href="{{ location.url | relative_url }}" class="block">
+                    <img src="{{ location.image_url }}" alt="{{ location.name }}" class="w-20 h-20 rounded-lg object-cover hover:opacity-80 transition-opacity">
+                  </a>
+                </div>
                 {% endif %}
+
+                <!-- Location Info -->
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-semibold text-gray-900">
+                    <a href="{{ location.url | relative_url }}" class="hover:text-blue-600">{{ location.name }}</a>
+                  </h3>
+                  {% if location.caption %}
+                  <p class="text-sm text-gray-500 mb-1">{{ location.caption }}</p>
+                  {% endif %}
+                  {% if location.description %}
+                  <div class="text-gray-700 mt-2 text-sm prose prose-sm max-w-none"><div class="content">{{ location.description | markdownify }}</div></div>
+                  {% endif %}
+                </div>
               </div>
             </div>
           {% endif %}
