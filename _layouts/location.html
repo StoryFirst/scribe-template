@@ -25,7 +25,9 @@ layout: default
       {% endif %}
 
       {% if page.description %}
-      <p class="text-gray-700 text-lg">{{ page.description }}</p>
+      <div class="text-gray-700 text-lg content">
+        {{ page.description | markdownify }}
+      </div>
       {% endif %}
     </div>
   </div>
@@ -37,7 +39,7 @@ layout: default
       {% if content != "" and content != nil %}
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">About</h2>
-        <div class="prose max-w-none text-gray-700">
+        <div class="prose max-w-none text-gray-700 content">
           {{ content }}
         </div>
       </div>
