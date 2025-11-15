@@ -20,22 +20,24 @@ layout: default
   {% if page.character_appearances and page.character_appearances.size > 0 %}
   <section class="character-appearances mb-12">
     <h2 class="text-2xl font-bold mb-6">Character Appearances</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {% for appearance in page.character_appearances %}
         {% assign character = site.characters | where: "scribe_id", appearance.id | first %}
         {% if character %}
-          <div class="character-card border border-gray-300 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group relative">
+          <div class="character-card border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex">
             {% if character.image_url %}
-              <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-full aspect-square object-cover">
+              <div class="flex-shrink-0 w-32 flex items-start justify-center">
+                <img src="{{ character.image_url }}" alt="{{ character.name }}" class="w-32 h-32 object-cover">
+              </div>
             {% endif %}
-            <div class="p-2">
+            <div class="p-2 flex-1 flex flex-col">
               <h3 class="text-sm font-bold mb-0.5">{{ character.name }}</h3>
               {% if character.caption %}
-                <p class="text-xs text-gray-500 italic">{{ character.caption }}</p>
+                <p class="text-xs text-gray-500 italic mb-1">{{ character.caption }}</p>
               {% endif %}
               {% if appearance.description %}
-                <div class="appearance-description absolute inset-0 bg-white bg-opacity-95 p-4 opacity-0 group-hover:opacity-100 transition-opacity overflow-y-auto">
-                  <div class="text-sm text-gray-700 prose prose-sm max-w-none"><div class="content">{{ appearance.description | markdownify }}</div></div>
+                <div class="text-xs text-gray-700 prose prose-sm max-w-none flex-1">
+                  <div class="content">{{ appearance.description | markdownify }}</div>
                 </div>
               {% endif %}
             </div>
