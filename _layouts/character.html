@@ -59,13 +59,7 @@ layout: default
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Personality</h2>
 
-        {% if page.personality_description %}
-        <div class="mb-4 prose max-w-none">
-          <div class="text-gray-700"><div class="content">{{ page.personality_description | markdownify }}</div></div>
-        </div>
-        {% endif %}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           {% if page.personality_motivation %}
           <div class="bg-blue-50 rounded-lg p-4">
             <h3 class="text-sm font-semibold text-blue-900 mb-1">Motivation</h3>
@@ -94,6 +88,13 @@ layout: default
           </div>
           {% endif %}
         </div>
+
+        {% if page.personality_description %}
+        <div class="mt-4">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Summary</h3>
+          <div class="text-gray-700 prose max-w-none"><div class="content">{{ page.personality_description | markdownify }}</div></div>
+        </div>
+        {% endif %}
       </div>
       {% endif %}
 
