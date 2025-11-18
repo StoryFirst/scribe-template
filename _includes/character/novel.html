@@ -106,7 +106,11 @@
           {% if page.apperance_height %}
           <div>
             <dt class="text-sm font-medium text-gray-500">Height</dt>
-            <dd class="text-gray-900">{{ page.apperance_height }} inches</dd>
+            <dd class="text-gray-900">
+              {% assign feet = page.apperance_height | divided_by: 12 %}
+              {% assign inches = page.apperance_height | modulo: 12 %}
+              {{ feet }}'{{ inches }}"
+            </dd>
           </div>
           {% endif %}
 
