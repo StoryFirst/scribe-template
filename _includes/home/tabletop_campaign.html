@@ -1,0 +1,87 @@
+{{ content }}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h1 class="text-3xl font-bold mb-8">Recent Updates</h1>
+
+  {% comment %}
+  Combine all collections into a single array with type labels
+  {% endcomment %}
+  {% assign all_items = "" | split: "" %}
+
+  {% for character in site.characters %}
+    {% assign item = character | assign_properties: "collection_type", "character" %}
+    {% assign all_items = all_items | push: character %}
+  {% endfor %}
+
+  {% for book in site.books %}
+    {% assign all_items = all_items | push: book %}
+  {% endfor %}
+
+  {% for chapter in site.chapters %}
+    {% assign all_items = all_items | push: chapter %}
+  {% endfor %}
+
+  {% for location in site.locations %}
+    {% assign all_items = all_items | push: location %}
+  {% endfor %}
+
+  {% comment %}
+  Sort by updated_at and limit to 30 items
+  {% endcomment %}
+  {% assign sorted_items = all_items | sort: "updated_at" | reverse | slice: 0, 30 %}
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for item in sorted_items %}
+      <a href="{{ item.url | relative_url }}" class="block group">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          {% if item.image_url %}
+            <div class="aspect-square w-full overflow-hidden bg-gray-200">
+              <img src="{{ item.image_url }}" alt="{{ item.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            </div>
+          {% endif %}
+
+          <div class="p-4">
+            <div class="flex items-center gap-2 mb-2">
+              {% if item.collection == "characters" %}
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                  Character
+                </span>
+              {% elsif item.collection == "books" %}
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Book
+                </span>
+              {% elsif item.collection == "chapters" %}
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Chapter
+                </span>
+              {% elsif item.collection == "locations" %}
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Location
+                </span>
+              {% endif %}
+
+              <span class="text-xs text-gray-500">
+                {{ item.updated_at | date: "%b %d, %Y" }}
+              </span>
+            </div>
+
+            <h2 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
+              {{ item.name }}
+            </h2>
+
+            {% if item.caption %}
+              <p class="text-sm text-gray-600 line-clamp-2">
+                {{ item.caption }}
+              </p>
+            {% elsif item.description %}
+              <p class="text-sm text-gray-600 line-clamp-2">
+                {{ item.description }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+

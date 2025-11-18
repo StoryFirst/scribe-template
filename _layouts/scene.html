@@ -1,0 +1,12 @@
+---
+layout: default
+---
+{% if site.scribe.format == 'tabletop_campaign' %}
+  {% include scene/tabletop_campaign.html %}
+{% elsif site.scribe.format == 'novel' %}
+  {% include scene/novel.html %}
+{% else %}
+  {% include scene/tabletop_campaign.html %}
+{% endif %}
+
+
