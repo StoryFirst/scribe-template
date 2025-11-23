@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Breadcrumb Navigation -->
-  {% if page.parent.id %}
-  {% assign parent_location = site.locations | where: "scribe_id", page.parent.id | first %}
+  {% if page.parent_id %}
+  {% assign parent_location = site.locations | where: "scribe_id", page.parent_id | first %}
   <nav class="mb-4" aria-label="Breadcrumb">
     <ol class="flex items-center space-x-2 text-sm text-gray-600">
       <li>
@@ -12,11 +12,11 @@
       </li>
       {% if parent_location %}
       <li>
-        <a href="{{ parent_location.url | relative_url }}" class="hover:text-blue-600">{{ page.parent.name }}</a>
+        <a href="{{ parent_location.url | relative_url }}" class="hover:text-blue-600">{{ parent_location.name }}</a>
       </li>
       {% else %}
       <li>
-        <span>{{ page.parent.name }}</span>
+        <span>{{ parent_location.name }}</span>
       </li>
       {% endif %}
       <li>
@@ -102,30 +102,29 @@
     <!-- Sidebar Column -->
     <div class="space-y-6">
       <!-- Parent Location -->
-      {% if page.parent.id %}
+      {% if parent_location %}
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-bold text-gray-900 mb-4">Parent Location</h2>
-        {% assign parent_location = site.locations | where: "id", page.parent.id | first %}
         {% if parent_location %}
         <a href="{{ parent_location.url | relative_url }}" class="block group">
-          {% if page.parent.image_url %}
+          {% if parent_location.image_url %}
           <div class="aspect-video w-full overflow-hidden bg-gray-200 rounded-lg mb-3">
-            <img src="{{ page.parent.image_url }}" alt="{{ page.parent.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <img src="{{ parent_location.image_url }}" alt="{{ parent_location.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
           </div>
           {% endif %}
-          <h3 class="font-semibold text-lg text-gray-900 group-hover:text-blue-600">{{ page.parent.name }}</h3>
+          <h3 class="font-semibold text-lg text-gray-900 group-hover:text-blue-600">{{ parent_location.name }}</h3>
           {% if parent_location.caption %}
           <p class="text-sm text-gray-600 mt-1">{{ parent_location.caption }}</p>
           {% endif %}
         </a>
         {% else %}
         <div>
-          {% if page.parent.image_url %}
+          {% if parent_location.image_url %}
           <div class="aspect-video w-full overflow-hidden bg-gray-200 rounded-lg mb-3">
-            <img src="{{ page.parent.image_url }}" alt="{{ page.parent.name }}" class="w-full h-full object-cover">
+            <img src="{{ parent_location.image_url }}" alt="{{ parent_location.name }}" class="w-full h-full object-cover">
           </div>
           {% endif %}
-          <h3 class="font-semibold text-lg text-gray-900">{{ page.parent.name }}</h3>
+          <h3 class="font-semibold text-lg text-gray-900">{{ parent_location.name }}</h3>
         </div>
         {% endif %}
       </div>
