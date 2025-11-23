@@ -21,7 +21,7 @@
   </div>
 
   <!-- Chapter Count -->
-  {% assign book_chapters = site.chapters | where: "book_id", page.scribe_id %}
+  {% assign book_chapters = site.chapters | where: "book_id", page.scribe_id | sort: "number" %}
   {% if book_chapters.size > 0 %}
   <div class="bg-white rounded-lg shadow p-6">
     <div class="flex items-center justify-between">

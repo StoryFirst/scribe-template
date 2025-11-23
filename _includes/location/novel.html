@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Breadcrumb Navigation -->
   {% if page.parent.id %}
-  {% assign parent_location = site.locations | where: "id", page.parent.id | first %}
+  {% assign parent_location = site.locations | where: "scribe_id", page.parent.id | first %}
   <nav class="mb-4" aria-label="Breadcrumb">
     <ol class="flex items-center space-x-2 text-sm text-gray-600">
       <li>
@@ -72,37 +72,26 @@
       {% endif %}
 
       <!-- Child Locations -->
-      {% if page.children.size > 0 %}
+      {% assign child_locations = site.locations | where: "parent_id", page.scribe_id %}
+      {% if child_locations.size > 0 %}
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Locations Within {{ page.name }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {% for child in page.children %}
+          {% for child_location in child_locations %}
           <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-            {% assign child_location = site.locations | where: "scribe_id", child.id | first %}
-            {% if child_location %}
-              <a href="{{ child_location.urtl }}" class="block group">
-                {% if child.image_url %}
-                <div class="aspect-video w-full overflow-hidden bg-gray-200">
-                  <img src="{{ child.image_url }}" alt="{{ child.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                </div>
-                {% endif %}
-                <div class="p-4">
-                  <h3 class="font-semibold text-gray-900 group-hover:text-blue-600">{{ child.name }}</h3>
-                  {% if child_location.caption %}
-                  <p class="text-sm text-gray-600 mt-1">{{ child_location.caption }}</p>
-                  {% endif %}
-                </div>
-              </a>
-            {% else %}
-              {% if child.image_url %}
+            <a href="{{ child_location.url | relative_url }}" class="block group">
+              {% if child_location.image_url %}
               <div class="aspect-video w-full overflow-hidden bg-gray-200">
-                <img src="{{ child.image_url }}" alt="{{ child.name }}" class="w-full h-full object-cover">
+                <img src="{{ child_location.image_url }}" alt="{{ child_location.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
               </div>
               {% endif %}
               <div class="p-4">
-                <h3 class="font-semibold text-gray-900">{{ child.name }}</h3>
+                <h3 class="font-semibold text-gray-900 group-hover:text-blue-600">{{ child_location.name }}</h3>
+                {% if child_location.caption %}
+                <p class="text-sm text-gray-600 mt-1">{{ child_location.caption }}</p>
+                {% endif %}
               </div>
-            {% endif %}
+            </a>
           </div>
           {% endfor %}
         </div>
@@ -160,10 +149,11 @@
           </div>
           {% endif %}
 
-          {% if page.children.size > 0 %}
+          {% assign child_locations_count = site.locations | where: "parent_id", page.scribe_id | size %}
+          {% if child_locations_count > 0 %}
           <div>
             <dt class="text-gray-500">Sub-locations</dt>
-            <dd class="text-gray-900">{{ page.children.size }}</dd>
+            <dd class="text-gray-900">{{ child_locations_count }}</dd>
           </div>
           {% endif %}
         </dl>
