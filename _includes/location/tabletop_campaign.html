@@ -78,7 +78,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {% for child in page.children %}
           <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-            {% assign child_location = site.locations | where: "id", child.id | first %}
+            {% assign child_location = site.locations | where: "scribe_id", child.id | first %}
             {% if child_location %}
               <a href="{{ child_location.url | relative_url }}" class="block group">
                 {% if child.image_url %}
