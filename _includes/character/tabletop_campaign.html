@@ -59,7 +59,7 @@
           {% if page.personality_motivation %}
           <div class="bg-blue-50 rounded-lg p-4">
             <h3 class="text-sm font-semibold text-blue-900 mb-1">Motivation</h3>
-            <p class="text-blue-800 capitalize">{{ page.personality_motivation | replace: "_", " " }}</p>
+            <p class="text-blue-800 capitalize">{{ page.personality_motivation | replace: "_", " " }}{% if page.personality_motivation_description %} - {{ page.personality_motivation_description }}{% endif %}</p>
           </div>
           {% endif %}
 
@@ -132,7 +132,7 @@
                     <p class="text-sm text-gray-500 mb-1">{{ relationship.caption }}</p>
                     {% endif %}
                   </div>
-                  <span class="flex-shrink-0 px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap {% if rel_type == 'enemy' %}text-red-600 bg-red-50 border-red-200{% elsif rel_type == 'friend' %}text-blue-600 bg-blue-50 border-blue-200{% elsif rel_type == 'ally' %}text-green-600 bg-green-50 border-green-200{% elsif rel_type == 'unknown' %}text-gray-600 bg-gray-50 border-gray-200{% elsif rel_type == 'rival' %}text-orange-600 bg-orange-50 border-orange-200{% else %}text-gray-600 bg-gray-50 border-gray-200{% endif %} border">
+                  <span class="flex-shrink-0 px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap {% if rel_type == 'enemy' %}text-red-600 bg-red-50 border-red-200{% elsif rel_type == 'friend' %}text-blue-600 bg-blue-50 border-blue-200 {% elsif rel_type == 'family' %}text-pink-600 bg-pink-50 border-pink-200 {% elsif rel_type == 'ally' %}text-green-600 bg-green-50 border-green-200{% elsif rel_type == 'unknown' %}text-gray-600 bg-gray-50 border-gray-200{% elsif rel_type == 'rival' %}text-orange-600 bg-orange-50 border-orange-200{% else %}text-gray-600 bg-gray-50 border-gray-200{% endif %} border">
                     {{ relationship.relationship | capitalize }}
                   </span>
                 </div>
