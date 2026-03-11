@@ -101,8 +101,9 @@
         <div class="space-y-4">
           {% for relationship in page.character_relationships %}
           {% assign related_character = site.characters | where: "scribe_id", relationship.id | first %}
-          <div class="border-l-4 {% if relationship.relationship == 'ally' %}border-green-500{% elsif relationship.relationship == 'enemy' %}border-red-500{% elsif relationship.relationship == 'unknown' %}border-gray-400{% else %}border-blue-500{% endif %}">
-            <div class="flex items-start gap-4 pl-4">
+          {% assign rel_type = relationship.relationship | downcase %}
+          <div class="border border-gray-200 rounded-lg bg-white">
+            <div class="flex items-start gap-4 p-4">
               <!-- Character Image -->
               {% if related_character.image_url %}
               <div class="flex-shrink-0">
@@ -131,11 +132,7 @@
                     <p class="text-sm text-gray-500 mb-1">{{ relationship.caption }}</p>
                     {% endif %}
                   </div>
-                  <span class="flex-shrink-0 px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap
-                    {% if relationship.relationship == 'ally' %}bg-green-100 text-green-800
-                    {% elsif relationship.relationship == 'enemy' %}bg-red-100 text-red-800
-                    {% elsif relationship.relationship == 'unknown' %}bg-gray-100 text-gray-800
-                    {% else %}bg-blue-100 text-blue-800{% endif %}">
+                  <span class="flex-shrink-0 px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap {% if rel_type == 'enemy' %}text-red-600 bg-red-50 border-red-200{% elsif rel_type == 'friend' %}text-blue-600 bg-blue-50 border-blue-200{% elsif rel_type == 'ally' %}text-green-600 bg-green-50 border-green-200{% elsif rel_type == 'unknown' %}text-gray-600 bg-gray-50 border-gray-200{% elsif rel_type == 'rival' %}text-orange-600 bg-orange-50 border-orange-200{% else %}text-gray-600 bg-gray-50 border-gray-200{% endif %} border">
                     {{ relationship.relationship | capitalize }}
                   </span>
                 </div>

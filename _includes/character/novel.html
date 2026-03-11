@@ -58,6 +58,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {% for relationship in page.character_relationships %}
           {% assign related_character = site.characters | where: "scribe_id", relationship.id | first %}
+          {% assign rel_type = relationship.relationship | downcase %}
           <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
             {% if related_character %}
             <a href="{{ related_character.url | relative_url }}" class="block">
@@ -65,9 +66,14 @@
               <img src="{{ related_character.image_url }}" alt="{{ relationship.name }}" class="w-full h-48 object-cover">
               {% endif %}
               <div class="p-4">
-                <h3 class="font-semibold text-gray-900 hover:text-blue-600">{{ relationship.name }}</h3>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <h3 class="font-semibold text-gray-900 hover:text-blue-600 flex-1">{{ relationship.name }}</h3>
+                  <span class="flex-shrink-0 px-2 py-1 text-xs font-medium rounded-full {% if rel_type == 'enemy' %}text-red-600 bg-red-50 border-red-200{% elsif rel_type == 'friend' %}text-blue-600 bg-blue-50 border-blue-200{% elsif rel_type == 'ally' %}text-green-600 bg-green-50 border-green-200{% elsif rel_type == 'unknown' %}text-gray-600 bg-gray-50 border-gray-200{% elsif rel_type == 'rival' %}text-orange-600 bg-orange-50 border-orange-200{% else %}text-gray-600 bg-gray-50 border-gray-200{% endif %} border">
+                    {{ relationship.relationship | capitalize }}
+                  </span>
+                </div>
                 {% if relationship.caption %}
-                <p class="text-sm text-gray-500 mt-1">{{ relationship.caption }}</p>
+                <p class="text-sm text-gray-500">{{ relationship.caption }}</p>
                 {% endif %}
               </div>
             </a>
@@ -76,9 +82,14 @@
               <img src="{{ related_character.image_url }}" alt="{{ relationship.name }}" class="w-full h-48 object-cover">
               {% endif %}
               <div class="p-4">
-                <h3 class="font-semibold text-gray-900">{{ relationship.name }}</h3>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <h3 class="font-semibold text-gray-900 flex-1">{{ relationship.name }}</h3>
+                  <span class="flex-shrink-0 px-2 py-1 text-xs font-medium rounded-full {% if rel_type == 'enemy' %}text-red-600 bg-red-50 border-red-200{% elsif rel_type == 'friend' %}text-blue-600 bg-blue-50 border-blue-200{% elsif rel_type == 'ally' %}text-green-600 bg-green-50 border-green-200{% elsif rel_type == 'unknown' %}text-gray-600 bg-gray-50 border-gray-200{% elsif rel_type == 'rival' %}text-orange-600 bg-orange-50 border-orange-200{% else %}text-gray-600 bg-gray-50 border-gray-200{% endif %} border">
+                    {{ relationship.relationship | capitalize }}
+                  </span>
+                </div>
                 {% if relationship.caption %}
-                <p class="text-sm text-gray-500 mt-1">{{ relationship.caption }}</p>
+                <p class="text-sm text-gray-500">{{ relationship.caption }}</p>
                 {% endif %}
               </div>
             {% endif %}
