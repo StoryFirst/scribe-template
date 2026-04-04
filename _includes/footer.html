@@ -1,6 +1,6 @@
 <footer class="bg-{{page.theme | default: 'brand'}} text-gray-400">
   <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
-    <p class="text-sm">&copy; 2025 {{site.title}} - Powered by <a href="https://scribe.story-first.com" class="hover:text-white">Scribe byStory First</a></p>
+    <p class="text-sm">&copy; {{ site.time | date: '%Y' }} {{ site.title }}. - Powered by <a href="https://scribe.story-first.com" class="hover:text-white">Scribe byStory First</a></p>
     <ul class="flex space-x-4 mt-4 sm:mt-0">
       <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
       <li><a href="#" class="hover:text-white">Terms of Service</a></li>
